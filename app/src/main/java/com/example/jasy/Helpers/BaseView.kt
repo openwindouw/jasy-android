@@ -1,7 +1,7 @@
 package com.example.jasy.Helpers
 
-interface BaseView<T> {
+interface BaseView {
+    fun showError(message: String)
     fun showActivityIndicator()
     fun hideActivityIndicator()
-    fun setPresenter(presenter: T)
 }
