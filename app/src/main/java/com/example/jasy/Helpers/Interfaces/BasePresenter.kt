@@ -1,4 +1,4 @@
-package com.example.jasy.Helpers
+package com.example.jasy.Helpers.Interfaces
 
 interface BasePresenter<T> {
     fun onCreate(view: T)

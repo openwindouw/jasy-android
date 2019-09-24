@@ -1,5 +1,6 @@
 package com.example.jasy.Model
 
+import com.example.jasy.Helpers.Constants.NASAConstants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -31,7 +32,7 @@ interface ApodService {
 
             val retrofit =  Retrofit.Builder()
                 .client(client)
-                .baseUrl("https://api.nasa.gov/")
+                .baseUrl(NASAConstants.baseURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

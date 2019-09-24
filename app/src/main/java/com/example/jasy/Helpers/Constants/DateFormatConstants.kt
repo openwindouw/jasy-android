@@ -1,4 +1,4 @@
-package com.example.jasy.Helpers
+package com.example.jasy.Helpers.Constants
 
 class DateFormatConstants {
     companion object {

@@ -1,6 +1,6 @@
 package com.example.jasy.Interactor
 
-import com.example.jasy.Helpers.Constants
+import com.example.jasy.Helpers.Constants.NASAConstants
 import com.example.jasy.Model.ApodModel
 import com.example.jasy.Model.ApodService
 import retrofit2.Call
@@ -20,7 +20,7 @@ class ApodInteractor: ApodInteractorInterface {
         onError: ((String) -> Unit)?
     ) {
         ApodService.shared
-            .getApod(false, "", Constants.apiKey)
+            .getApod(false, "", NASAConstants.apiKey)
             .enqueue(object: Callback<ApodModel> {
                 override fun onFailure(call: Call<ApodModel>, t: Throwable) {
                     onError?.let { it(t.localizedMessage) }
@@ -42,7 +42,7 @@ class ApodInteractor: ApodInteractorInterface {
         onError: ((String) -> Unit)?
     ) {
         ApodService.shared
-            .getApods(false, initialDate, endDate, Constants.apiKey)
+            .getApods(false, initialDate, endDate, NASAConstants.apiKey)
             .enqueue(object: Callback<List<ApodModel>> {
                 override fun onFailure(call: Call<List<ApodModel>>, t: Throwable) {
                     onError?.let { it(t.localizedMessage) }
