@@ -22,8 +22,8 @@ class ListPresenter(private val interactor: ApodInteractorInterface): BasePresen
     }
 
     fun getApods() {
-        interactor.getApod("", false, "", {
-//            view?.set()
+        interactor.getApods("2019-02-01", "2019-02-28",false, {
+            view?.set(it)
         }, {
             view?.showError(it)
         })

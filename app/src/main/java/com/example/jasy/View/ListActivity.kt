@@ -2,6 +2,7 @@ package com.example.jasy.View
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.jasy.Interactor.ApodInteractor
 import com.example.jasy.Model.ApodModel
 import com.example.jasy.Presenter.ListPresenter
@@ -16,6 +17,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         setContentView(R.layout.activity_main)
 
         presenter.onCreate(this)
+        presenter.getApods()
     }
 
     override fun onDestroy() {
@@ -24,18 +26,18 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     }
 
     override fun set(list: List<ApodModel>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.v("ListActivity", list.toString())
     }
 
     override fun showActivityIndicator() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun hideActivityIndicator() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun showError(message: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }

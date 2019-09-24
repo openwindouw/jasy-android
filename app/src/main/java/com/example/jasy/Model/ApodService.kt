@@ -16,6 +16,12 @@ interface ApodService {
                 @Query("date") date: String,
                 @Query("api_key") apiKey: String): Call<ApodModel>
 
+    @GET("planetary/apod")
+    fun getApods(@Query("hd") hd: Boolean = false,
+                @Query("start_date") startDate: String,
+                 @Query("end_date") endDate: String,
+                @Query("api_key") apiKey: String): Call<List<ApodModel>>
+
     companion object {
         var shared : ApodService = {
             val interceptor = HttpLoggingInterceptor()
