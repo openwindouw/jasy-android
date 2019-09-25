@@ -23,7 +23,7 @@ class ApodInteractor: ApodInteractorInterface {
             .getApod(false, "", NASAConstants.apiKey)
             .enqueue(object: Callback<ApodModel> {
                 override fun onFailure(call: Call<ApodModel>, t: Throwable) {
-                    onError?.let { it(t.localizedMessage) }
+                    onError?.let { it(t.localizedMessage ?: "") }
                 }
 
                 override fun onResponse(call: Call<ApodModel>, response: Response<ApodModel>) {
@@ -45,7 +45,7 @@ class ApodInteractor: ApodInteractorInterface {
             .getApods(false, initialDate, endDate, NASAConstants.apiKey)
             .enqueue(object: Callback<List<ApodModel>> {
                 override fun onFailure(call: Call<List<ApodModel>>, t: Throwable) {
-                    onError?.let { it(t.localizedMessage) }
+                    onError?.let { it(t.localizedMessage ?: "") }
                 }
 
                 override fun onResponse(call: Call<List<ApodModel>>, response: Response<List<ApodModel>>) {
