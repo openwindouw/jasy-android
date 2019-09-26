@@ -24,11 +24,13 @@ class ApodListAdapter(private val list: List<ApodModel>): RecyclerView.Adapter<A
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val apod = list[position]
         holder.title.text = apod.title
+        holder.date.text = apod.date
         Picasso.get().load(apod.url).into(holder.imageView)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.apod_image_view)
         val title: TextView = itemView.findViewById(R.id.apod_text_view)
+        val date: TextView = itemView.findViewById(R.id.apod_text_view_date)
     }
 }
