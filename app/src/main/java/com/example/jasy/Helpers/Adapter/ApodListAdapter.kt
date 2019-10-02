@@ -1,4 +1,4 @@
-package com.example.jasy.Adapter
+package com.example.jasy.Helpers.Adapter
 
 import android.view.LayoutInflater
 import android.view.View

@@ -1,4 +1,4 @@
-package com.example.jasy.Interactor
+package com.example.jasy.Model.Interactor
 
 import com.example.jasy.Helpers.Constants.NASAConstants
 import com.example.jasy.Model.ApodModel
