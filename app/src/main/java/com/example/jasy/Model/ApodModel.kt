@@ -1,5 +1,7 @@
 package com.example.jasy.Model
 
+import java.io.Serializable
+
 data class ApodModel(
     val date: String,
     val explanation: String,
@@ -8,4 +10,4 @@ data class ApodModel(
     val service_version: String,
     val title: String,
     val url: String
-)
+): Serializable

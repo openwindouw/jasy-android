@@ -1,7 +1,9 @@
 package com.example.jasy.View
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.jasy.Helpers.Adapter.ApodListAdapter
@@ -22,8 +24,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         setContentView(R.layout.list_activity)
 
         presenter.onCreate(this)
-        listRecycleView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-
+        listRecycleView.layoutManager = GridLayoutManager(this, 3)
 
         presenter.getApods()
     }
@@ -34,7 +35,13 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     }
 
     override fun set(list: List<ApodModel>) {
-        listRecycleView.adapter = ApodListAdapter(list)
+        val adapter = ApodListAdapter(list) {
+            val i = Intent(this, ApodDetailActivity::class.java)
+            i.putExtra("apodModel", it)
+            startActivity(i)
+        }
+
+        listRecycleView.adapter = adapter
     }
 
     override fun showActivityIndicator() {
