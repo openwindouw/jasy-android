@@ -4,8 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.jasy.Helpers.Adapter.ApodListAdapter
 import com.example.jasy.Helpers.Extensions.hide
 import com.example.jasy.Helpers.Extensions.show
@@ -13,9 +11,13 @@ import com.example.jasy.Model.Interactor.ApodInteractor
 import com.example.jasy.Model.ApodModel
 import com.example.jasy.Presenter.ListPresenter
 import com.example.jasy.R
+import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.android.synthetic.main.list_activity.*
 
 class ListActivity : AppCompatActivity(), ListPresenter.View {
+    companion object {
+        val APOD_MODEL = "apodModel"
+    }
 
     private val presenter = ListPresenter(ApodInteractor())
 
@@ -27,6 +29,9 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         listRecycleView.layoutManager = GridLayoutManager(this, 3)
 
         presenter.getApods()
+
+        val toolbar = toolbar as MaterialToolbar
+        toolbar.title = "JASY"
     }
 
     override fun onDestroy() {
@@ -37,7 +42,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     override fun set(list: List<ApodModel>) {
         val adapter = ApodListAdapter(list) {
             val i = Intent(this, ApodDetailActivity::class.java)
-            i.putExtra("apodModel", it)
+            i.putExtra(APOD_MODEL, it)
             startActivity(i)
         }
 
