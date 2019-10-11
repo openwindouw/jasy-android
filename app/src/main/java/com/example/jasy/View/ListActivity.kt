@@ -3,6 +3,11 @@ package com.example.jasy.View
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.jasy.Helpers.Adapter.ApodListAdapter
 import com.example.jasy.Helpers.Extensions.hide
@@ -28,10 +33,9 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         presenter.onCreate(this)
         listRecycleView.layoutManager = GridLayoutManager(this, 3)
 
-        presenter.getApods()
+        configureToolbar()
 
-        val toolbar = toolbar as MaterialToolbar
-        toolbar.title = "JASY"
+        presenter.getApods()
     }
 
     override fun onDestroy() {
@@ -39,6 +43,18 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         super.onDestroy()
     }
 
+    private fun configureToolbar() {
+        val toolbar = toolbar as MaterialToolbar
+        toolbar.title = "JASY"
+
+        toolbar.inflateMenu(R.menu.list_menu_options)
+
+        toolbar.setOnMenuItemClickListener {
+
+        }
+    }
+
+    //Presenter's Methods
     override fun set(list: List<ApodModel>) {
         val adapter = ApodListAdapter(list) {
             val i = Intent(this, ApodDetailActivity::class.java)
