@@ -34,9 +34,9 @@ class ApodListAdapter(private val list: List<ApodModel>, private val onClickList
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.apod_image_view)
-        val title: TextView = itemView.findViewById(R.id.apod_text_view)
-        val date: TextView = itemView.findViewById(R.id.apod_text_view_date)
-        val cardView: MaterialCardView = itemView.findViewById(R.id.apod_card_view)
+        val imageView: ImageView = itemView.findViewById(R.id.apodImageView)
+        val title: TextView = itemView.findViewById(R.id.apodTextView)
+        val date: TextView = itemView.findViewById(R.id.apodTextViewDate)
+        val cardView: MaterialCardView = itemView.findViewById(R.id.apodCardView)
     }
 }

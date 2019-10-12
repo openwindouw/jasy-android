@@ -50,7 +50,15 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         toolbar.inflateMenu(R.menu.list_menu_options)
 
         toolbar.setOnMenuItemClickListener {
-
+            when (it.itemId) {
+                R.id.search -> {
+                    runOnUiThread {
+                        Toast.makeText(this, "Searching...", Toast.LENGTH_LONG)
+                    }
+                    true
+                }
+                else -> { true }
+            }
         }
     }
 
