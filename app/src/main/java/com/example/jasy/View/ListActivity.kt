@@ -1,13 +1,10 @@
 package com.example.jasy.View
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.jasy.Helpers.Adapter.ApodListAdapter
 import com.example.jasy.Helpers.Extensions.hide
@@ -25,16 +22,18 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     }
 
     private val presenter = ListPresenter(ApodInteractor())
+    private lateinit var context: Context
+    private var apodList: List<ApodModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.list_activity)
 
-        presenter.onCreate(this)
-        listRecycleView.layoutManager = GridLayoutManager(this, 3)
-
         configureToolbar()
 
+        context = this
+
+        presenter.onCreate(this)
         presenter.getApods()
     }
 
@@ -53,7 +52,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
             when (it.itemId) {
                 R.id.search -> {
                     runOnUiThread {
-                        Toast.makeText(this, "Searching...", Toast.LENGTH_LONG)
+                        Toast.makeText(context, "Searching...", Toast.LENGTH_LONG)
                     }
                     true
                 }
@@ -64,12 +63,14 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
     //Presenter's Methods
     override fun set(list: List<ApodModel>) {
+        apodList = list
+
         val adapter = ApodListAdapter(list) {
             val i = Intent(this, ApodDetailActivity::class.java)
             i.putExtra(APOD_MODEL, it)
             startActivity(i)
         }
-
+        listRecycleView.layoutManager = GridLayoutManager(this, 3)
         listRecycleView.adapter = adapter
     }
 

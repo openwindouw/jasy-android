@@ -1,44 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
-            android:id="@+id/apodDetailImageView"
-            android:contentDescription=""
-            android:minHeight="150dp"
-            android:scaleType="centerCrop"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent" >
 
-        <TextView
-            android:id="@+id/apodDetailText"
-            android:textColor="#FFFFFF"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <WebView
+                android:id="@+id/apodDetailWebView"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:minHeight="300dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
 
-    </LinearLayout>
+            <ImageView
+                android:id="@+id/apodDetailImageView"
+                android:visibility="gone"
+                android:contentDescription=""
+                tools:visibility="visible"
+                android:minHeight="150dp"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-</androidx.core.widget.NestedScrollView>
+            <TextView
+                android:id="@+id/apodDetailText"
+                android:layout_margin="@dimen/default_margin"
+                android:textColor="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-<com.google.android.material.appbar.AppBarLayout
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent">
+        </LinearLayout>
 
-    <include android:id="@+id/apodDetailToolbar" layout="@layout/main_toolbar"/>
+    </androidx.core.widget.NestedScrollView>
 
-</com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <include android:id="@+id/apodDetailToolbar" layout="@layout/main_toolbar"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
