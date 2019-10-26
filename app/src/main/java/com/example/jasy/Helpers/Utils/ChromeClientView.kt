@@ -15,7 +15,7 @@ class CustomWebChromeClient(private val context: AppCompatActivity) : WebChromeC
     private var originalSystemUiVisibility: Int = 0
 
     override fun getDefaultVideoPoster(): Bitmap? {
-        return BitmapFactory.decodeResource(context.applicationContext.getResources(), 2130837573)
+        return BitmapFactory.decodeResource(context.applicationContext.resources, 2130837573)
     }
     override fun onShowCustomView(view: View?, callback: CustomViewCallback?) {
         customView?.let { onHideCustomView() }

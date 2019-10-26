@@ -30,17 +30,17 @@ class ApodDetailActivity : AppCompatActivity() {
     }
 
     private fun configure(apod: ApodModel) {
-        if (apod.media_type == MEDIA_TYPE_IMAGE) {
-            apodDetailImageView.isVisible = true
-            Picasso.get().load(apod.url).into(apodDetailImageView)
-        } else {
-            apodDetailWebView.isVisible = true
-            apodDetailWebView.webChromeClient = CustomWebChromeClient(this)
-            apodDetailWebView.settings.javaScriptEnabled = true
-            apodDetailWebView.loadUrl(apod.url)
-        }
-
-        apodDetailText.text = apod.explanation
+//        if (apod.media_type == MEDIA_TYPE_IMAGE) {
+//            apodDetailImageView.isVisible = true
+//            Picasso.get().load(apod.url).into(apodDetailImageView)
+//        } else {
+//            apodDetailWebView.isVisible = true
+//            apodDetailWebView.webChromeClient = CustomWebChromeClient(this)
+//            apodDetailWebView.settings.javaScriptEnabled = true
+//            apodDetailWebView.loadUrl(apod.url)
+//        }
+//
+//        apodDetailText.text = apod.explanation
 
     }
 

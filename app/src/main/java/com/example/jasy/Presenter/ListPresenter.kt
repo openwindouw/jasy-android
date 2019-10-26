@@ -2,6 +2,7 @@ package com.example.jasy.Presenter
 
 import com.example.jasy.Helpers.Interfaces.BasePresenter
 import com.example.jasy.Helpers.Interfaces.BaseView
+import com.example.jasy.Helpers.Singleton
 import com.example.jasy.Model.Interactor.ApodInteractorInterface
 import com.example.jasy.Model.ApodModel
 
@@ -23,13 +24,17 @@ class ListPresenter(private val interactor: ApodInteractorInterface):
     }
 
     fun getApods() {
-        view?.showActivityIndicator()
-        interactor.getApods("2019-02-01", "2019-02-28",false, {
-            view?.hideActivityIndicator()
-            view?.set(it)
-        }, {
-            view?.hideActivityIndicator()
-            view?.showError(it)
-        })
+        if (Singleton.apodList == null) {
+            view?.showActivityIndicator()
+            interactor.getApods("2019-02-01", "2019-02-28",false, {
+                view?.hideActivityIndicator()
+                view?.set(it)
+            }, {
+                view?.hideActivityIndicator()
+                view?.showError(it)
+            })
+        } else {
+            view?.set(Singleton.apodList!!)
+        }
     }
 }
