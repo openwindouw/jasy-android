@@ -1,9 +1,9 @@
 package com.example.jasy.View
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.jasy.Helpers.Adapter.ApodListAdapter
@@ -23,7 +23,6 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     }
 
     private val presenter = ListPresenter(ApodInteractor())
-    private lateinit var context: Context
     private var apodList: List<ApodModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +30,6 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         setContentView(R.layout.list_activity)
 
         configureToolbar()
-
-        context = this
 
         presenter.onCreate(this)
         presenter.getApods()
@@ -53,7 +50,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
             when (it.itemId) {
                 R.id.search -> {
                     runOnUiThread {
-                        Toast.makeText(context, "Searching...", Toast.LENGTH_LONG)
+                        Toast.makeText(this, "Searching...", Toast.LENGTH_LONG)
                     }
                     true
                 }
@@ -71,7 +68,18 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
             i.putExtra(APOD_MODEL, it)
             startActivity(i)
         }
-        listRecycleView.layoutManager = GridLayoutManager(this, 3)
+
+        val gridLayoutManager = GridLayoutManager(this, 3)
+        gridLayoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val mod = position % 4
+
+                return if (position < 4) 1
+                else if (mod == 0 || mod == 1) 2
+                else 1
+            }
+        }
+        listRecycleView.layoutManager = gridLayoutManager
         listRecycleView.adapter = adapter
     }
 
@@ -84,6 +92,6 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     }
 
     override fun showError(message: String) {
-
+        Log.d("", message)
     }
 }
