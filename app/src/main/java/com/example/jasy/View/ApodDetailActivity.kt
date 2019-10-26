@@ -3,55 +3,72 @@ package com.example.jasy.View
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.core.view.isVisible
+import android.widget.Toolbar
+import androidx.viewpager.widget.ViewPager
+import com.example.jasy.Helpers.Adapter.ApodDetailPagerAdapter
+import com.example.jasy.Helpers.Singleton
 import com.example.jasy.Model.ApodModel
 import com.example.jasy.R
 import com.google.android.material.appbar.MaterialToolbar
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.apod_detail_activity.*
-import com.example.jasy.Helpers.Utils.CustomWebChromeClient
+import kotlin.math.absoluteValue
+
 
 class ApodDetailActivity : AppCompatActivity() {
-
-    companion object {
-        private const val MEDIA_TYPE_IMAGE = "image"
-    }
+    private lateinit var pagerAdapter: ApodDetailPagerAdapter
+    private lateinit var selectedApod: ApodModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.apod_detail_activity)
 
-        val apodModel = intent.extras?.get(ListActivity.APOD_MODEL) as? ApodModel
+        selectedApod = intent.getSerializableExtra(ListActivity.APOD_MODEL) as ApodModel
 
-        apodModel?.let {
-            configure(it)
-            configureToolbar(it)
+        Singleton.apodList?.let {
+            pagerAdapter = ApodDetailPagerAdapter(it, supportFragmentManager)
+            viewPager.adapter = pagerAdapter
+
+            viewPager.currentItem = it.indexOf(selectedApod)
+            viewPager.clipToPadding = false
+
+            val sidePadding = resources.getDimension(R.dimen.view_pager_padding).toInt()
+            val topPadding = resources.getDimension(R.dimen.view_pager_padding_top).toInt()
+            val itemsMargin = resources.getDimension(R.dimen.view_pager_margin_items).toInt()
+
+            viewPager.setPadding(sidePadding, topPadding, sidePadding, 0)
+            viewPager.pageMargin = itemsMargin
+
+            viewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) { }
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) { }
+
+                override fun onPageSelected(position: Int) {
+                    setToolbarTitle(it[position % it.size])
+                }
+            })
         }
+
+        configureToolbar()
+        setToolbarTitle(selectedApod)
     }
 
-    private fun configure(apod: ApodModel) {
-//        if (apod.media_type == MEDIA_TYPE_IMAGE) {
-//            apodDetailImageView.isVisible = true
-//            Picasso.get().load(apod.url).into(apodDetailImageView)
-//        } else {
-//            apodDetailWebView.isVisible = true
-//            apodDetailWebView.webChromeClient = CustomWebChromeClient(this)
-//            apodDetailWebView.settings.javaScriptEnabled = true
-//            apodDetailWebView.loadUrl(apod.url)
-//        }
-//
-//        apodDetailText.text = apod.explanation
 
-    }
-
-    private fun configureToolbar(apod: ApodModel) {
+    private fun configureToolbar() {
         val toolbar = apodDetailToolbar as MaterialToolbar
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+    }
 
+    private fun setToolbarTitle(apod: ApodModel) {
+        val toolbar = apodDetailToolbar as MaterialToolbar
         toolbar.title = apod.title
         toolbar.subtitle = apod.date
     }

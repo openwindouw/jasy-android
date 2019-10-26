@@ -17,8 +17,9 @@ import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.android.synthetic.main.list_activity.*
 
 class ListActivity : AppCompatActivity(), ListPresenter.View {
+
     companion object {
-        val APOD_MODEL = "apodModel"
+        const val APOD_MODEL = "apodModel"
     }
 
     private val presenter = ListPresenter(ApodInteractor())

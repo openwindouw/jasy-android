@@ -27,6 +27,7 @@ class ListPresenter(private val interactor: ApodInteractorInterface):
         if (Singleton.apodList == null) {
             view?.showActivityIndicator()
             interactor.getApods("2019-02-01", "2019-02-28",false, {
+                Singleton.apodList = it
                 view?.hideActivityIndicator()
                 view?.set(it)
             }, {
