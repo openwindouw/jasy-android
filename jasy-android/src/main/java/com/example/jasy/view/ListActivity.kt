@@ -72,6 +72,8 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         val gridLayoutManager = GridLayoutManager(this, 3)
         gridLayoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int {
+                if (position == 0) return 3
+
                 val mod = position % 4
 
                 return if (position < 4) 1
