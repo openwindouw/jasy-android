@@ -23,10 +23,10 @@ class ListPresenter(private val interactor: ApodInteractorInterface):
         view = null
     }
 
-    fun getApods() {
-        if (Singleton.apodList == null) {
+    fun getApods(startDate: String = "2019-02-01", endDate: String = "2019-02-28" ) {
+//        if (Singleton.apodList == null) {
             view?.showActivityIndicator()
-            interactor.getApods("2019-02-01", "2019-02-28",false, {
+            interactor.getApods(startDate, endDate,false, {
                 Singleton.apodList = it
                 view?.hideActivityIndicator()
                 view?.set(it)
@@ -34,8 +34,8 @@ class ListPresenter(private val interactor: ApodInteractorInterface):
                 view?.hideActivityIndicator()
                 view?.showError(it)
             })
-        } else {
-            view?.set(Singleton.apodList!!)
-        }
+//        } else {
+//            view?.set(Singleton.apodList!!)
+//        }
     }
 }

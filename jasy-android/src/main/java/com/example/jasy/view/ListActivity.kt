@@ -3,8 +3,9 @@ package com.example.jasy.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
-import android.widget.Toast
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.jasy.helpers.adapter.ApodListAdapter
 import com.example.jasy.helpers.extensions.hide
@@ -14,6 +15,8 @@ import com.example.jasy.model.ApodModel
 import com.example.jasy.presenter.ListPresenter
 import com.example.jasy.R
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.list_activity.*
 
 class ListActivity : AppCompatActivity(), ListPresenter.View {
@@ -30,6 +33,8 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         setContentView(R.layout.list_activity)
 
         configureToolbar()
+        configureTextFields()
+        setOnClickListenerFor(requestSearchButton)
 
         presenter.onCreate(this)
         presenter.getApods()
@@ -38,6 +43,34 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     override fun onDestroy() {
         presenter.onDestroy()
         super.onDestroy()
+    }
+
+    private fun setOnClickListenerFor(button: MaterialButton) {
+        button.setOnClickListener {
+            val startDateString = startDate.text.toString()
+            val endDateString = endDate.text.toString()
+
+            presenter.getApods(startDateString, endDateString)
+        }
+    }
+
+    private fun configureTextFields() {
+        setOnFocusChangeListenerFor(startDate)
+        setOnFocusChangeListenerFor(endDate)
+    }
+
+    private fun setOnFocusChangeListenerFor(editText: TextInputEditText) {
+        editText.inputType = InputType.TYPE_NULL
+
+        editText.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                val datePickerFragment = DatePickerFragment.newInstance { year, month, dayOfMonth ->
+                    editText.setText("$year-$month-$dayOfMonth")
+                }
+
+                datePickerFragment.show(supportFragmentManager, "datePicker")
+            }
+        }
     }
 
     private fun configureToolbar() {
@@ -49,9 +82,12 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.search -> {
-                    runOnUiThread {
-                        Toast.makeText(this, "Searching...", Toast.LENGTH_LONG)
+                    if (datesContainerLinearLayout.visibility == View.VISIBLE) {
+                        datesContainerLinearLayout.visibility = View.GONE
+                    } else {
+                        datesContainerLinearLayout.visibility = View.VISIBLE
                     }
+
                     true
                 }
                 else -> { true }
@@ -61,6 +97,8 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
     //Presenter's Methods
     override fun set(list: List<ApodModel>) {
+        datesContainerLinearLayout.visibility = View.GONE
+
         apodList = list
 
         val adapter = ApodListAdapter(list) {
