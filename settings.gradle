@@ -1,2 +1,2 @@
-include ':app'
+include ':jasy-android'
 rootProject.name='Jasy'

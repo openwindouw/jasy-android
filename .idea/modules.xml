@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Jasy.iml" filepath="$PROJECT_DIR$/Jasy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jasy-android-Jasy.iml" filepath="$PROJECT_DIR$/jasy-android-Jasy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/jasy-android-app.iml" filepath="$PROJECT_DIR$/app/jasy-android-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jasy-android/jasy-android-jasy-android.iml" filepath="$PROJECT_DIR$/jasy-android/jasy-android-jasy-android.iml" />
     </modules>
   </component>
 </project>
