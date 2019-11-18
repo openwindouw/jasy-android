@@ -3,21 +3,24 @@ package com.example.jasy.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.InputType
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.jasy.helpers.adapter.ApodListAdapter
-import com.example.jasy.helpers.extensions.hide
-import com.example.jasy.helpers.extensions.show
 import com.example.jasy.model.interactor.ApodInteractor
 import com.example.jasy.model.ApodModel
 import com.example.jasy.presenter.ListPresenter
 import com.example.jasy.R
+import com.example.jasy.helpers.Singleton
+import com.example.jasy.helpers.extensions.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.list_activity.*
+import java.io.Serializable
+import java.util.*
 
 class ListActivity : AppCompatActivity(), ListPresenter.View {
 
@@ -37,7 +40,9 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         setOnClickListenerFor(requestSearchButton)
 
         presenter.onCreate(this)
-        presenter.getApods()
+
+        val now = Date()
+        presenter.getApods(now.formattedFirstDateOfCurrentMonth, now.formattedCurrentDate )
     }
 
     override fun onDestroy() {
@@ -47,10 +52,15 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
     private fun setOnClickListenerFor(button: MaterialButton) {
         button.setOnClickListener {
+
+            Singleton.apodList = null
+
             val startDateString = startDate.text.toString()
             val endDateString = endDate.text.toString()
 
             presenter.getApods(startDateString, endDateString)
+
+            datesContainerLinearLayout.visibility = View.GONE
         }
     }
 
@@ -64,8 +74,9 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
         editText.setOnFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
-                val datePickerFragment = DatePickerFragment.newInstance { year, month, dayOfMonth ->
-                    editText.setText("$year-$month-$dayOfMonth")
+                val datePickerFragment = DatePickerFragment.newInstance { formattedDate ->
+                    editText.setText(formattedDate)
+                    editText.clearFocus()
                 }
 
                 datePickerFragment.show(supportFragmentManager, "datePicker")
@@ -75,7 +86,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
     private fun configureToolbar() {
         val toolbar = toolbar as MaterialToolbar
-        toolbar.title = "JASY"
+        toolbar.title = getString(R.string.app_name)
 
         toolbar.inflateMenu(R.menu.list_menu_options)
 
@@ -114,8 +125,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
                 val mod = position % 4
 
-                return if (position < 4) 1
-                else if (mod == 0 || mod == 1) 2
+                return if (mod == 0 || mod == 1) 2
                 else 1
             }
         }
