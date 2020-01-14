@@ -13,14 +13,13 @@
         tools:visibility="visible"
         android:minHeight="300dp"
         android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_height="@dimen/webview_default_height" />
 
     <ImageView
         android:id="@+id/apodDetailImageView"
         android:visibility="gone"
-        android:contentDescription=""
         tools:visibility="visible"
-        android:minHeight="150dp"
+        android:minHeight="@dimen/imageview_min_height"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -28,7 +27,7 @@
     <TextView
         android:id="@+id/apodDetailText"
         android:layout_margin="@dimen/default_margin"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

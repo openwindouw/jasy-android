@@ -9,7 +9,7 @@ import com.example.jasy.helpers.Singleton
 import com.example.jasy.model.ApodModel
 import com.example.jasy.R
 import com.google.android.material.appbar.MaterialToolbar
-import kotlinx.android.synthetic.main.apod_detail_activity.*
+import kotlinx.android.synthetic.main.activity_apod_detail.*
 
 
 class ApodDetailActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class ApodDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.apod_detail_activity)
+        setContentView(R.layout.activity_apod_detail)
 
         selectedApod = intent.getSerializableExtra(ListActivity.APOD_MODEL) as ApodModel
 

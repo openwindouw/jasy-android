@@ -32,7 +32,7 @@ class ApodDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val layoutView = inflater.inflate(R.layout.apod_detail_view, container, false)
+        val layoutView = inflater.inflate(R.layout.fragment_apod_detail, container, false)
         val pictureImageView = layoutView.findViewById(R.id.apodDetailImageView) as ImageView
         val webView = layoutView.findViewById(R.id.apodDetailWebView) as WebView
         val textDetail = layoutView.findViewById(R.id.apodDetailText) as TextView

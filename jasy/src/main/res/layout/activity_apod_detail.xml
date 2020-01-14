@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent">
 
-        <include android:id="@+id/apodDetailToolbar" layout="@layout/main_toolbar"/>
+        <include android:id="@+id/apodDetailToolbar" layout="@layout/toolbar_main"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

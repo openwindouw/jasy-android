@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 class ApodListAdapter(private val list: List<ApodModel>, private val onClickListenerCallback: (ApodModel) -> Unit): RecyclerView.Adapter<ApodListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_item_layout, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.layout_adapter_item, parent, false)
         return ViewHolder(v)
     }
 
@@ -26,7 +26,14 @@ class ApodListAdapter(private val list: List<ApodModel>, private val onClickList
         val apod = list[position]
         holder.title.text = apod.title
         holder.date.text = apod.date
-        Picasso.get().load(apod.url).into(holder.imageView)
+
+        if (apod.media_type == "image") {
+            Picasso.get().load(apod.url).into(holder.imageView)
+        } else {
+            holder.imageView.setImageResource(R.drawable.ic_video_foreground)
+            holder.imageView.adjustViewBounds = true
+        }
+
         holder.cardView.setOnClickListener {
             val currentModel = list[position]
             onClickListenerCallback(currentModel)

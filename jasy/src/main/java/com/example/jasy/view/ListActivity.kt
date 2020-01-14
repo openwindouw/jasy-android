@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.jasy.helpers.adapter.ApodListAdapter
 import com.example.jasy.model.interactor.ApodInteractor
@@ -17,7 +18,7 @@ import com.example.jasy.helpers.extensions.*
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.android.synthetic.main.list_activity.*
+import kotlinx.android.synthetic.main.activity_list.*
 import java.util.*
 
 class ListActivity : AppCompatActivity(), ListPresenter.View {
@@ -31,7 +32,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.list_activity)
+        setContentView(R.layout.activity_list)
 
         configureToolbar()
         configureTextFields()
@@ -70,7 +71,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     private fun setOnFocusChangeListenerFor(editText: TextInputEditText) {
         editText.inputType = InputType.TYPE_NULL
 
-        editText.setOnFocusChangeListener { v, hasFocus ->
+        editText.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 val datePickerFragment = DatePickerFragment.newInstance { formattedDate ->
                     editText.setText(formattedDate)
@@ -132,10 +133,14 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
     override fun showActivityIndicator() {
         progressBar.show()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun hideActivityIndicator() {
         progressBar.hide()
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 
     override fun showError(message: String) {
