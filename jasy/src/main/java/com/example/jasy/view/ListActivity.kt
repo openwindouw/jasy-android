@@ -3,7 +3,6 @@ package com.example.jasy.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.text.InputType
 import android.util.Log
 import android.view.View
@@ -19,7 +18,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.list_activity.*
-import java.io.Serializable
 import java.util.*
 
 class ListActivity : AppCompatActivity(), ListPresenter.View {
@@ -42,7 +40,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
         presenter.onCreate(this)
 
         val now = Date()
-        presenter.getApods(now.formattedFirstDateOfCurrentMonth, now.formattedCurrentDate )
+        presenter.getPictureList(formattedFirstDateOfCurrentMonth, now.formattedCurrentDate )
     }
 
     override fun onDestroy() {
@@ -58,7 +56,7 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
             val startDateString = startDate.text.toString()
             val endDateString = endDate.text.toString()
 
-            presenter.getApods(startDateString, endDateString)
+            presenter.getPictureList(startDateString, endDateString)
 
             datesContainerLinearLayout.visibility = View.GONE
         }
@@ -76,7 +74,6 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
             if (hasFocus) {
                 val datePickerFragment = DatePickerFragment.newInstance { formattedDate ->
                     editText.setText(formattedDate)
-                    editText.clearFocus()
                 }
 
                 datePickerFragment.show(supportFragmentManager, "datePicker")

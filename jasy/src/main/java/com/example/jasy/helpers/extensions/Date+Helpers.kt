@@ -10,7 +10,7 @@ val Date.formattedCurrentDate : String
         return SimpleDateFormat(DateFormatConstants.default).format(this)
     }
 
-val Date.formattedFirstDateOfCurrentMonth: String
+val formattedFirstDateOfCurrentMonth: String
     get() {
         val c = Calendar.getInstance()
         c.set(Calendar.DAY_OF_MONTH, 1)

@@ -7,6 +7,7 @@ import com.example.jasy.helpers.constants.DateFormatConstants
 import com.example.jasy.model.interactor.ApodInteractorInterface
 import com.example.jasy.model.ApodModel
 import java.text.SimpleDateFormat
+import java.util.*
 
 class ListPresenter(private val interactor: ApodInteractorInterface):
     BasePresenter<ListPresenter.View> {
@@ -25,12 +26,12 @@ class ListPresenter(private val interactor: ApodInteractorInterface):
         view = null
     }
 
-    fun getApods(startDate: String, endDate: String) {
+    fun getPictureList(startDate: String, endDate: String) {
         if (Singleton.apodList == null) {
             view?.showActivityIndicator()
             interactor.getApods(startDate, endDate,false, {
                 Singleton.apodList = it.sortedByDescending { apodModel ->
-                    SimpleDateFormat(DateFormatConstants.default).parse(apodModel.date)
+                    SimpleDateFormat(DateFormatConstants.default, Locale.US).parse(apodModel.date)
                 }
                 view?.hideActivityIndicator()
                 view?.set(Singleton.apodList!!)
