@@ -27,6 +27,7 @@
     <TextView
         android:id="@+id/apodDetailText"
         android:layout_margin="@dimen/default_margin"
+        android:layout_gravity="center_vertical|end"
         android:textColor="@color/text_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

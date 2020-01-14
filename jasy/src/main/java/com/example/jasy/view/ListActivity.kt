@@ -3,6 +3,7 @@ package com.example.jasy.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.InputType
 import android.util.Log
 import android.view.View
@@ -30,6 +31,8 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     private val presenter = ListPresenter(ApodInteractor())
     private var apodList: List<ApodModel>? = null
 
+    private var lastClickTime: Long = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list)
@@ -52,14 +55,19 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
     private fun setOnClickListenerFor(button: MaterialButton) {
         button.setOnClickListener {
 
-            Singleton.apodList = null
+            if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+                lastClickTime = SystemClock.elapsedRealtime()
 
-            val startDateString = startDate.text.toString()
-            val endDateString = endDate.text.toString()
+                Singleton.apodList = null
 
-            presenter.getPictureList(startDateString, endDateString)
+                val startDateString = startDate.text.toString()
+                val endDateString = endDate.text.toString()
 
-            datesContainerLinearLayout.visibility = View.GONE
+                presenter.getPictureList(startDateString, endDateString)
+
+                datesContainerLinearLayout.visibility = View.GONE
+            }
+
         }
     }
 
@@ -145,5 +153,6 @@ class ListActivity : AppCompatActivity(), ListPresenter.View {
 
     override fun showError(message: String) {
         Log.d("", message)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
     }
 }
