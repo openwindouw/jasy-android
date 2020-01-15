@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.MaterialComponents.CardView"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/apodCardView"
+    android:layout_margin="@dimen/default_margin"
+    android:clickable="true"
+    android:maxHeight="150dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/apodImageView"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"/>
+
+        <TextView
+            android:id="@+id/apodTextView"
+            tools:text="HOLA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start" />
+
+        <TextView
+            style="sty"
+            android:id="@+id/apodTextViewDate"
+            tools:text="2013-01-31"
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
