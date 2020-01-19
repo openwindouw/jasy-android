@@ -31,7 +31,7 @@ class ListPresenter(private val interactor: ApodInteractorInterface):
             view?.showActivityIndicator()
             interactor.getApods(startDate, endDate,false, {
                 Singleton.apodList = it.sortedByDescending { apodModel ->
-                    SimpleDateFormat(DateFormatConstants.default, Locale.US).parse(apodModel.date)
+                    SimpleDateFormat(DateFormatConstants.default, Locale.getDefault()).parse(apodModel.date)
                 }
                 view?.hideActivityIndicator()
                 view?.set(Singleton.apodList!!)
